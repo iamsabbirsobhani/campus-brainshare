@@ -17,11 +17,11 @@
         </div>
     </div>
     <!-- image -->
-    <div class="grid gap-4 grid-cols-[260px_200px_200px] grid-rows-[250px_200px_200px]">
+    <div class="grid gap-5 grid-cols-[260px_200px_200px] grid-rows-[250px_200px_200px]">
         <img src=" {{URL::asset('/images/hero-section/2.png')}}" alt="hero-image" class="h-full rounded-2xl" />
         <img src=" {{URL::asset('/images/hero-section/1.png')}}" alt="hero-image" class=" rounded-2xl" />
         <img src=" {{URL::asset('/images/hero-section/3.png')}}" alt="hero-image" class=" rounded-2xl" />
-        <img src=" {{URL::asset('/images/hero-section/4.png')}}" alt="hero-image" class=" w-[95%] justify-self-center rounded-2xl" />
+        <img src=" {{URL::asset('/images/hero-section/4.png')}}" alt="hero-image" class=" mt-5 w-[95%] justify-self-center rounded-2xl" />
         <img src=" {{URL::asset('/images/hero-section/5.png')}}" alt="hero-image" class="  rounded-2xl col-span-2 " />
     </div>
 </div>
