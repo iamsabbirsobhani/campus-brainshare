@@ -13,6 +13,6 @@
 
     </head>
     <body class="font-sans antialiased">
-        <h1>Hello World!</h1>
+        <x-navbar.navbar />.
     </body>
 </html>
