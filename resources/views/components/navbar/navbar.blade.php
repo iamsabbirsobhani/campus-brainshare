@@ -1,6 +1,6 @@
 <nav class="flex justify-between items-center p-16">
     <div>
-        <h1 class="text-3xl font-bold"><span class="text-red-500">Campus&nbsp;</span>BrainShare</h1>
+        <h1 class="text-3xl font-extrabold"><span class="text-red-500">Campus&nbsp;</span>BrainShare</h1>
     </div>
     <div class="flex items-center relative">
         <input class="outline-none border rounded-full w-[550px] p-3 pl-5 pr-14" type="text" placeholder="Search Course eg. CSE247 ">
@@ -11,6 +11,9 @@
         </button>
     </div>
     <div>
-        <button class="bg-blue-500 text-white font-bold uppercase p-2 w-40 rounded-full">Log in</button>
+        <x-navbar.navbar />
+
+        <a href="/login"> <button class="bg-blue-500 text-white font-bold uppercase p-2 w-40 rounded-full">Log in</button></a>
+        <x-footer.footer />
     </div>
 </nav>
