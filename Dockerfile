@@ -20,14 +20,19 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN chown -R www-data:www-data /var/www/html
 
 # Update Apache configuration to allow access to the directory and set the document root to the public directory
-RUN echo '<VirtualHost *:80>' > /etc/apache2/sites-available/000-default.conf
-RUN echo '    DocumentRoot /var/www/html/public' >> /etc/apache2/sites-available/000-default.conf
-RUN echo '    <Directory /var/www/html/public>' >> /etc/apache2/sites-available/000-default.conf
-RUN echo '        Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf
-RUN echo '        AllowOverride All' >> /etc/apache2/sites-available/000-default.conf
-RUN echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf
-RUN echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf
-RUN echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
+RUN echo '<VirtualHost *:80>' > /etc/apache2/sites-available/000-default.conf \
+    && echo '    ServerName localhost' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '    DocumentRoot /var/www/html/public' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '    <Directory /var/www/html/public>' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '        Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '        AllowOverride All' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '    RewriteEngine On' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '    RewriteCond %{HTTP:X-Forwarded-Proto} =http' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]' >> /etc/apache2/sites-available/000-default.conf \
+    && echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf \
+    && ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
 
 # Expose the port your app will be running on
 EXPOSE 80

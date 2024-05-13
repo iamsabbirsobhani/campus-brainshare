@@ -15,8 +15,9 @@
 </head>
 
 <body class="font-sans antialiased">
-    <x-navbar.navbar />.
-    <x-hero.hero />.
+    <x-navbar.navbar />
+    <x-hero.hero />
+    <x-footer.footer />
 </body>
 
 </html>

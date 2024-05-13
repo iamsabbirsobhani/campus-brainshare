@@ -1,8 +1,8 @@
-<div class=" bg-blue-500/10 text-gray-700 flex justify-center gap-10 p-10 rounded-[40px] max-w-[80vw] m-auto items-center">
+<div class=" bg-blue-500/10 text-gray-700 flex justify-center gap-5 p-10 rounded-[40px] max-w-[85vw] m-auto items-center">
     <!-- If you do not have a consistent goal in life, you can not live it in a consistent way. - Marcus Aurelius -->
     <!-- texture -->
     <div class="">
-        <h1 class="text-6xl font-bold mb-5">Focusing on knowledge <br>
+        <h1 class="2xl:text-5xl xl:text-4xl font-bold mb-5">Focusing on knowledge <br>
             and skill sharing within <br>
             EWU Campus</h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="558.964" height="37.268" viewBox="0 0 558.964 37.268">
@@ -17,11 +17,11 @@
         </div>
     </div>
     <!-- image -->
-    <div class="grid gap-5 grid-cols-[260px_200px_200px] grid-rows-[250px_200px_200px]">
+    <div class="grid gap-5 xl:grid-cols-[150px_100px_100px] xl:grid-rows-[150px_100px_100px] 2xl:grid-cols-[230px_150px_150px] 2xl:grid-rows-[230px_150px_150px]">
         <img src=" {{URL::asset('/images/hero-section/2.png')}}" alt="hero-image" class="h-full rounded-2xl" />
         <img src=" {{URL::asset('/images/hero-section/1.png')}}" alt="hero-image" class=" rounded-2xl" />
         <img src=" {{URL::asset('/images/hero-section/3.png')}}" alt="hero-image" class=" rounded-2xl" />
         <img src=" {{URL::asset('/images/hero-section/4.png')}}" alt="hero-image" class=" mt-5 w-[95%] justify-self-center rounded-2xl" />
-        <img src=" {{URL::asset('/images/hero-section/5.png')}}" alt="hero-image" class="  rounded-2xl col-span-2 " />
+        <img src=" {{URL::asset('/images/hero-section/5.png')}}" alt="hero-image" class=" rounded-2xl col-span-2 " />
     </div>
 </div>
