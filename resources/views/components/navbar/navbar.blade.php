@@ -1,6 +1,8 @@
 <nav class="flex justify-between items-center p-16">
     <div>
-        <h1 class="text-3xl font-extrabold"><span class="text-red-500">Campus&nbsp;</span>BrainShare</h1>
+        <a href="/">
+            <h1 class="text-3xl font-extrabold"><span class="text-red-500">Campus&nbsp;</span>BrainShare</h1>
+        </a>
     </div>
     <div class="flex items-center relative">
         <input class="outline-none border rounded-full w-[550px] p-3 pl-5 pr-14" type="text" placeholder="Search Course eg. CSE247 ">
