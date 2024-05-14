@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,16 +19,22 @@ class UserController extends Controller
         $email = $_POST['email'];
         $password = $_POST['password'];
         $account_type = $_POST['account_type'];
+        $role = Role::where('account_type', $account_type)->first();
+        if (!$role) {
+            echo "Role not found";
+            return;
+        }
         $user = User::where('email', $username)->first();
         if (!$user) {
             $user = new User();
             $user->name = $username;
             $user->email = $email;
             $user->password = Hash::make($password);
+            $user->role_id = $role->id;
             $user->save();
-            $user->assignRole($account_type);
             echo "User created successfully";
             echo "Vaue", $user->id, "";
+            echo "User role", $user->role_id, "";
             // return view("/dashboard", ["username" => $username, "password" => $password]);
         }
     }
