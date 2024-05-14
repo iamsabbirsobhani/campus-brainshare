@@ -11,9 +11,6 @@
         </button>
     </div>
     <div>
-        <x-navbar.navbar />
-
         <a href="/login"> <button class="bg-blue-500 text-white font-bold uppercase p-2 w-40 rounded-full">Log in</button></a>
-        <x-footer.footer />
     </div>
 </nav>
