@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -20,7 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profilephotourl',
+        'available',
+        'bio'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -32,6 +37,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
     /**
      * Get the attributes that should be cast.
      *
@@ -40,7 +49,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

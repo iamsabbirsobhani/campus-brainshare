@@ -25,7 +25,7 @@
                 <h1 class="text-2xl font-bold">One more step to go!</h1>
                 <p>Please <span class="text-blue-500 underline font-bold">sign up</span> to continue</p>
             </div>
-            <form action="/userlogin" method="post" class="mt-10">
+            <form action="/register" method="post" class="mt-10">
                 @csrf
                 <div class="flex flex-col">
                     <label for="name">Name:</label>
