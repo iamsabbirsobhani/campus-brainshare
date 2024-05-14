@@ -31,7 +31,6 @@
                     <label for="name">Name:</label>
                     <input class="outline-none border-2 w-full border-gray-200 p-3" type="text" name="name" id="name" required placeholder="please enter mail">
                 </div>
-                @csrf
                 <div class="flex flex-col mt-5">
                     <label for="email">Email:</label>
                     <input class="outline-none border-2 w-full border-gray-200 p-3" type="email" name="email" id="email" required placeholder="please enter mail">

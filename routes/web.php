@@ -15,9 +15,7 @@ Route::get('/register', function () {
     return view('register');
 });
 
-Route::get('/userprofile', function () {
-    return view('userprofile');
-});
+Route::get('/userprofile', [UserController::class, 'userpro']);
 
 Route::get('/logout', [UserController::class, 'logout']);
 

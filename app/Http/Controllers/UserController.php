@@ -45,7 +45,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('userprofile');
+            return view('userprofile', ["username" => Auth::user()->name, "role" => Auth::user()->role->account_type]);
         }
 
         // Authentication failed...
@@ -58,5 +58,17 @@ class UserController extends Controller
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function userpro()
+    {
+        if (Auth::check()) {
+            $user = User::where('email', Auth::user()->email)->first();
+            return view('userprofile', ["username" => $user->name, "role" => $user->role->account_type]);
+        } else {
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
+        }
     }
 }
