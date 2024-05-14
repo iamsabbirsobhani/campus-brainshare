@@ -13,7 +13,7 @@
             your campus. Brains together, success achieved.</p>
 
         <div class="mt-5">
-            <button class="bg-blue-500 text-white text-xl font-bold uppercase p-4 w-96 rounded-full">Create Free Account</button>
+            <a href="/register"> <button class="bg-blue-500 text-white text-xl font-bold uppercase p-4 w-96 rounded-full">Create Free Account</button></a>
         </div>
     </div>
     <!-- image -->

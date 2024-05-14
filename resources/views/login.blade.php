@@ -22,7 +22,7 @@
         <div>
             <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
-            <dotlottie-player src="https://lottie.host/cba17167-e31a-4d70-968b-33840fac75ad/qhFm8X2geu.json" background="transparent" speed="1" style="width: 450px; height: 450px;" loop autoplay></dotlottie-player>
+            <dotlottie-player src="https://lottie.host/cba17167-e31a-4d70-968b-33840fac75ad/qhFm8X2geu.json" background="transparent" speed="0.5" style="width: 450px; height: 450px;" loop autoplay></dotlottie-player>
         </div>
         <div>
             <div>
