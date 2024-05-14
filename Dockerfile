@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev
 
-RUN docker-php-ext-install mysqli pdo_mysql
+RUN docker-php-ext-install pdo_mysql
 
 # Set ServerName directive in Apache configuration
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf

@@ -38,25 +38,25 @@ class UserController extends Controller
             // return view("/dashboard", ["username" => $username, "password" => $password]);
         }
     }
-    public function login()
+
+    public function login(Request $request)
     {
-        // Retrieve the login data from the form
-        $username = $_POST['email'];
-        $password = $_POST['password'];
+        $credentials = $request->only('email', 'password');
 
-        // Use the login data for further processing
-        // ...
-
-        $user = User::where('email', $username)->first();
-
-        // Redirect or display a response
-        if ($user) {
-            echo 'User', $user->email, '';
-        } else {
-            echo 'No User found';
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->intended('userprofile');
         }
 
-        // ...
-        // return view("/dashboard", ["username" => $username, "password" => $password]);
+        // Authentication failed...
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

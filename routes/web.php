@@ -15,5 +15,11 @@ Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('/userprofile', function () {
+    return view('userprofile');
+});
+
+Route::get('/logout', [UserController::class, 'logout']);
+
 Route::post('/userlogin', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'create']);

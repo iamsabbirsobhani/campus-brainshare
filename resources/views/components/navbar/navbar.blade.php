@@ -13,6 +13,14 @@
         </button>
     </div>
     <div>
-        <a href="/login"> <button class="bg-blue-500 text-white font-bold uppercase p-2 w-40 rounded-full">Log in</button></a>
+        <!-- <a href="/login"> <button class="bg-blue-500 text-white font-bold uppercase p-2 w-40 rounded-full">Log in</button></a> -->
+
+        <div>
+            @if (Auth::check())
+            <a href="/logout"> <button class="bg-gray-700 hover:bg-gray-700 text-white font-bold uppercase p-2 w-40 rounded-full">Log out</button></a>
+            @else
+            <a href="/login"> <button class="bg-blue-500 text-white font-bold uppercase p-2 w-40 rounded-full">Log in</button></a>
+            @endif
+        </div>
     </div>
 </nav>
