@@ -32,7 +32,7 @@
                 @csrf
                 <div class="mb-4">
                     <label for="bio" class="block text-gray-700 text-sm font-bold mb-2">Bio:</label>
-                    <textarea name="bio" id="bio" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"></textarea>
+                    <textarea placeholder="please write down your bio" name="bio" id="bio" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"></textarea>
                 </div>
                 <div class="mb-4">
                     <label for="expertise" class="block text-gray-700 text-sm font-bold mb-2">Expertise:</label>

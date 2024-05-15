@@ -31,3 +31,4 @@ Route::get('/logout', [UserController::class, 'logout']);
 Route::post('/userlogin', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'create']);
 Route::post('/usereditprofile', [UserController::class, 'editprofile']);
+Route::post('/searchexpert', [UserController::class, 'getallexpertsoncourses']);

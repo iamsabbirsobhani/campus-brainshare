@@ -185,4 +185,25 @@ class UserController extends Controller
             ]);
         }
     }
+
+    // check if a user is an expert in a course like this:
+    // if ($user->courses()->where('course_id', $courseId)->exists()) {
+    //     // The user is an expert in the course
+    // }
+    // get all expert users in a course like this:
+
+
+    public function getallexpertsoncourses(Request $request)
+    {
+        $course = Course::where('name', 'LIKE', '%' . $request->coursename . '%')->first();
+        $experts = $course->users;
+        return view('expertsoncourse', ["experts" => $experts, "course" => $course->name]);
+    }
+
+    // get all courses a user is an expert in like this:
+    // $courses = $user->courses;
+
+
+
+
 }
