@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('profilephotourl')->nullable();
             $table->boolean('available')->nullable();
-            $table->string('bio')->nullable();
+            $table->longText('bio')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('gender')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

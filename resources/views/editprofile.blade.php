@@ -28,7 +28,7 @@
             <x-usernav.menu />
         </div>
         <div class="border border-gray-200 w-96 p-3">
-            <form action="/usereditprofile" method="POST" class="mt-8">
+            <form action="/usereditprofile" method="POST" class="mt-8" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label for="bio" class="block text-gray-700 text-sm font-bold mb-2">Bio:</label>
@@ -54,9 +54,15 @@
                     <label for="available" class="block text-gray-700 text-sm font-bold mb-2">Availability:</label>
                     <select name="available" id="available" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
                         <option value="">Select Availability</option>
-                        <option value="true">True</option>
-                        <option value="false">False</option>
+                        <option value="1">True</option>
+                        <option value="0">False</option>
                     </select>
+                </div>
+
+                <div class="mt-5 mb-5">
+                    <label for="profile_pic" class="block text
+                    -gray-700 text-sm font-bold mb-2">Profile Picture:</label>
+                    <input type="file" name="profile_pic" id="profile_pic" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
                     <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>

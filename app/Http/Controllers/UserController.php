@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cloudinary\Transformation\Resize;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -10,6 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Role;
+
+use Cloudinary\Cloudinary;
+
 
 class UserController extends Controller
 {
@@ -21,7 +25,10 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return view('userprofile', ["username" => Auth::user()->name, "courses" => $user->courses, "role" => Auth::user()->role->account_type, "bio" => Auth::user()->bio]);
+            return view('userprofile', [
+                "username" => Auth::user()->name, "courses" => $user->courses, "role" => Auth::user()->role->account_type, "bio" => Auth::user()->bio, "available" => $user->available,
+                "profilephotourl" => $user->profilephotourl
+            ]);
         }
 
         // Authentication failed...
@@ -36,6 +43,7 @@ class UserController extends Controller
         $email = $_POST['email'];
         $password = $_POST['password'];
         $account_type = $_POST['account_type'];
+        $gender = $_POST['gender'];
         $role = Role::where('account_type', $account_type)->first();
         if (!$role) {
             echo "Role not found";
@@ -46,7 +54,12 @@ class UserController extends Controller
             $user = new User();
             $user->name = $username;
             $user->email = $email;
-            $user->bio = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ducimus assumenda eum vero quas? Reiciendis cumque officiis dolor quibusdam distinctio obcaecati voluptas, aperiam earum eveniet.";
+            $user->bio = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore sit temporibus ad officiis accusamus facere recusandae? Temporibus doloribus earum, exercitationem voluptatem deserunt placeat minus veniam ea. Aut voluptatibus corporis ea! Quam nobis distinctio totam voluptatibus reiciendis magnam mollitia voluptates, maiores odio neque fuga. Vero est deserunt, dicta adipisci eos quos voluptate magnam, dolor pariatur, quaerat cum ratione nobis modi nemo facere distinctio explicabo eum error! Aspernatur in dignissimos laudantium praesentium quisquam quibusdam accusantium! Ea laudantium eius delectus sequi provident tempore natus laborum totam ipsa adipisci ad omnis, vitae itaque illum eum perspiciatis iste architecto neque incidunt explicabo, sint voluptas ipsum?";
+            if ($gender == "male") {
+                $user->profilephotourl = "https://res.cloudinary.com/dxfwriq5h/image/upload/v1715766442/6_tkf6jy.jpg";
+            } else {
+                $user->profilephotourl = "https://res.cloudinary.com/dxfwriq5h/image/upload/v1715766434/1_dqebro.jpg";
+            }
             $user->available = false;
             $user->password = Hash::make($password);
             $user->role_id = $role->id;
@@ -60,7 +73,7 @@ class UserController extends Controller
             $user = Auth::user();
 
             // Return the user profile view with the user's information
-            return view('userprofile', ["username" => $user->name, "courses" => $user->courses, "role" => $user->role->account_type, "bio" => $user->bio]);
+            return view('userprofile', ["username" => $user->name, "courses" => $user->courses, "role" => $user->role->account_type, "bio" => $user->bio, "profilephotourl" => $user->profilephotourl, "available" => $user->available]);
         } else {
             echo "User already exists";
         }
@@ -69,6 +82,8 @@ class UserController extends Controller
 
     public function editprofile(Request $request)
     {
+        $bio = $_POST['bio'];
+        $available = $_POST['available'];
         $validatedData = $request->validate([
             'bio' => 'nullable|string',
             'expertise' => 'nullable|string|exists:courses,name',
@@ -90,58 +105,52 @@ class UserController extends Controller
             $user->bio = $validatedData['bio'];
         }
 
-        if ($request->filled('available')) {
-            $user->available = $validatedData['available'];
+        if (isset($available)) {
+
+            // $user->available = $request->has('available') ? $request->available : 0;
+            $user = User::find(Auth::user()->id);
+            $user->available = ($user->available == 1) ? 1 : ($request->filled('available') ? $request->available : 0);
         }
 
+
         $user->save();
+
+        // echo $request->profile_pic;
+
+        $cloudinary = new Cloudinary(
+            [
+                'cloud' => [
+                    'cloud_name' => env('CN_CLOUD_NAME'),
+                    'api_key'    => env("CN_CLOUD_API_KEY"),
+                    'api_secret' => env("CN_CLOUD_API_SECRET"),
+                ],
+            ]
+        );
+        if ($request->hasFile('profile_pic')) {
+            $image = $request->file('profile_pic');
+            $imagePath = $image->getRealPath();
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->getRealPath();
+
+            $result = $cloudinary->uploadApi()->upload($imagePath, [
+                'public_id' => $name,
+                'folder' => 'profile_pics'
+            ]);
+
+            $url = $result['url'];
+
+            User::where('id', Auth::user()->id)->update(['profilephotourl' => $url]);
+        }
 
         if (!isset($er_msg)) {
             $new_user = User::find(Auth::user()->id);
 
-            return view('/userprofile', ["username" => $user->name, "courses" => $new_user->courses, "bio" => $user->bio, "role" => $user->role->account_type, "available" => $user->available]);
+            return view('/userprofile', ["username" => $user->name, "courses" => $new_user->courses, "bio" => $user->bio, "role" => $user->role->account_type, "available" => $user->available, "profilephotourl" => $new_user->profilephotourl]);
         } else {
-            return view("/editprofile", ["username" => $user->name, "role" => $user->role->account_type, "er_msg" => $er_msg]);
+            return view("/editprofile", ["username" => $user->name, "role" => $user->role->account_type, "er_msg" => $er_msg, "profilephotourl" => $user->profilephotourl]);
         }
     }
 
-
-    // public function editprofile(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'bio' => 'nullable|string',
-    //         'expertise' => 'nullable|string|exists:courses,name',
-    //         'available' => 'nullable|boolean',
-    //     ]);
-    //     $expertise = $_POST['expertise'];
-
-    //     $user = User::find(Auth::user()->id);
-
-    //     $course = Course::where("name", $expertise)->first();
-
-    //     // echo "Course:", $course->name;
-    //     // echo "Course:", $course->id;
-
-
-    //     if ($course) {
-    //         $user->courses()->attach($course);
-    //     } else {
-    //         // Handle the case where the course does not exist
-    //     }
-
-
-    //     if ($request->filled('bio')) {
-    //         $user->bio = $validatedData['bio'];
-    //     }
-
-    //     if ($request->filled('available')) {
-    //         $user->available = $validatedData['available'];
-    //     }
-
-    //     $user->save();
-
-    //     return view('/userprofile', ["username" => $user->name, "bio" => $user->bio, "role" => $user->role->account_type]);
-    // }
 
     public function logout()
     {
@@ -154,7 +163,7 @@ class UserController extends Controller
         if (Auth::check()) {
             $user = User::where('email', Auth::user()->email)->first();
             $courses = $user->courses;
-            return view('userprofile', ["username" => $user->name, "bio" => $user->bio, "courses" => $user->courses, "role" => $user->role->account_type, "er_msg" => ""]);
+            return view('userprofile', ["username" => $user->name, "bio" => $user->bio, "courses" => $user->courses, "role" => $user->role->account_type, "er_msg" => "", "profilephotourl" => $user->profilephotourl, "available" => $user->available]);
         } else {
             return redirect("/");
         }
@@ -196,14 +205,37 @@ class UserController extends Controller
     public function getallexpertsoncourses(Request $request)
     {
         $course = Course::where('name', 'LIKE', '%' . $request->coursename . '%')->first();
-        $experts = $course->users;
-        return view('expertsoncourse', ["experts" => $experts, "course" => $course->name]);
+        if ($course) {
+            $experts = $course->users;
+            return view('expertsoncourse', ["experts" => $experts, "course" => $course->name, "er_msg" => ""]);
+        } else {
+            // Handle the case where no course was found
+            // For example, you can return a view with an error message
+            return view('expertsoncourse', ["experts" => [], "course" => "", "er_msg" => "Course not found."]);
+        }
     }
 
     // get all courses a user is an expert in like this:
     // $courses = $user->courses;
 
 
-
-
+    // get a single user profile from user table link is /profile/{id} by given url id
+    public function profile($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            return view('profile', [
+                "username" => $user->name,
+                "courses" => $user->courses,
+                "role" => $user->role->account_type,
+                "bio" => $user->bio,
+                "available" => $user->available,
+                "profilephotourl" => $user->profilephotourl
+            ]);
+        } else {
+            return back()->withErrors([
+                'error' => 'User not found.',
+            ]);
+        }
+    }
 }

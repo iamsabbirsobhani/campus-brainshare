@@ -32,3 +32,4 @@ Route::post('/userlogin', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'create']);
 Route::post('/usereditprofile', [UserController::class, 'editprofile']);
 Route::post('/searchexpert', [UserController::class, 'getallexpertsoncourses']);
+Route::get('/profile/{id}', [UserController::class, 'profile']);

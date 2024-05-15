@@ -31,7 +31,7 @@
         </div>
         <!-- profile picture -->
         <div>
-            <img src="https://maraviyainfotech.com/projects/ekka/ekka-v37/ekka-html/assets/images/user/1.jpg" alt="">
+            <img class="max-w-80" src="{{$profilephotourl}}" alt="">
         </div>
         <!-- user details -->
         <div class="flex justify-between mb-4 items-center mt-3">
@@ -43,7 +43,23 @@
         </div>
 
         <div>
-            <div class="font-bold mt-3 mb-3">Expertise:
+            <div class="flex items-center mt-4">
+
+                <h1 class="text-lg  font-bold ">Availability:</h1>
+
+
+                @if($available == 0)
+                <div class="w-4 h-4 ml-3 bg-red-500 rounded-full"></div>
+                @else
+                <div class="w-4 h-4 ml-3 bg-green-500 rounded-full">
+                </div>
+                @endif
+            </div>
+        </div>
+
+        <div>
+            <div class="font-bold mt-3 mb-3">
+                <h1 class="text-lg">Expertise:</h1>
                 @forelse ($courses as $course)
                 <li class="font-normal">{{ $course->name }}</li>
                 @empty

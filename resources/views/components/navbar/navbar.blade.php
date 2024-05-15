@@ -20,7 +20,8 @@
 
         <div>
             @if (Auth::check())
-            <a href="/logout"> <button class="bg-gray-700 hover:bg-gray-700 text-white font-bold uppercase p-2 w-40 rounded-full">Log out</button></a>
+            <a href="/userprofile"> <button class="bg-indigo-800  hover:bg-indigo-900 text-white font-bold uppercase p-2 w-40 rounded-full">Profile</button></a>
+            <a href="/logout"> <button class="bg-gray-700 hover:bg-gray-700 text-white font-bold ml-3 uppercase p-2 w-40 rounded-full">Log out</button></a>
             @else
             <a href="/login"> <button class="bg-blue-500 text-white font-bold uppercase p-2 w-40 rounded-full">Log in</button></a>
             @endif

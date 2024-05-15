@@ -47,6 +47,16 @@
                         <option value="KnowledgeSeeker">KnowledgeSeeker</option>
                     </select>
                 </div>
+
+                <!-- gender -->
+
+                <div class="flex flex-col mt-5">
+                    <label for="gender">Gender:</label>
+                    <select class="outline-none border-2 w-full border-gray-200 p-3" name="gender" id="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
                 <div class="text-center mt-5 ">
                     <button type="submit" class="bg-blue-500 p-2 w-full uppercase font-bold text-gray-50 rounded-sm">Create account</button>
                 </div>
